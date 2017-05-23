@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>OrionMan Daniel Line-Bell</title>
+  <script>
+  </script>
+  <style>
+  
+	canvas {
+		background: blue;
+	}
+  </style>
+</head>
+<body>
+
+	<canvas id = "myCanvas"></canvas>
+  <script src="three.min.js"></script>
+  <script src="TrackballControls.js"></script>
+  <script>
+    
+	//init();
+	
+	//function init(){
+	var camera = new THREE.PerspectiveCamera(28, window.innerWidth/
+                                              window.innerHeight, 0.1, 2800);
+	camera.position.z = 500;										  
+											 
+	//controls = new THREE.TrackballControls(camera);
+	//controls.addEventListener('change', render);
+	
+    var scene = new THREE.Scene();
+	
+	
+	
+	//Lights
+	var light = new THREE.AmbientLight(0xffffff, 0.5);
+	scene.add(light);
+	
+	var light0 = new THREE.PointLight(0xffffff, 0.5);
+	scene.add(light0);
+	
+	var light2 = new THREE.SpotLight(0xffffff, 2.0, 1000);
+	light.target = mesh0;
+	scene.add(light2);
+	/*
+	var light3 = new THREE.HemisphereLight(0xffffff, 0x00002a, 1000);
+	scene.add(light3);
+	*/
+	
+	
+	//Geometries
+    var geometry = new THREE.BoxGeometry( 100, 100, 100 );
+	
+	var geometry0 = new THREE.TorusGeometry(250, 25, 50, 50);
+	
+	var geometry2 = new THREE.PlaneGeometry(2800, 2800, 100, 100);
+	
+	/*var textGeometry = new THREE.TextGeometry('OrionMan: Daniel Line-Bell', {
+	
+		font: 'optimer',
+		weight: 'bold'
+	
+	});*/
+	
+	
+	/*geometry0.vertices.push(
+		new THREE.Vector3(-10, 10, 0),
+		new THREE.Vector3(-10, -10, 0),
+		new THREE.Vector3(10, -10, 0)
+	);
+	geometry0.faces.push(new THREE.Face3(0, 1, 2));*/
+	
+	/*var geometry1 = new THREE.BufferGeometry();
+	var vertices = new Float32Array([
+	-10.0, -10.0, 0.0,
+	10.0, -10.0, 0.0,
+	10.0, 10.0, 0.0
+	]);
+	geometry1.addAttribute('position', new THREEBufferAttribute(vertices, 3));
+	*/
+	
+	//Materials
+    var material = new THREE.MeshPhongMaterial({
+	
+		color: 0x00005a,
+		specular: 0x00007a,
+		shininess: 50,
+	
+
+	});
+    var mesh = new THREE.Mesh(geometry, material);
+	mesh.position.set(0, 110, -1000);
+	
+	var material0 = new THREE.MeshStandardMaterial({
+	
+		color: 0xc0c0c0,
+		//metalness: 10,
+		transparent: false,
+		wireframe: false
+	
+	});
+    var mesh0 = new THREE.Mesh(geometry0, material0);
+	mesh0.position.set(0, 110, -1000);
+	
+	var material2 = new THREE.MeshLambertMaterial({
+	
+		color: 0x0000ff,
+		specular: 0xffffff,		
+	
+	});
+	
+	var mesh2 = new THREE.Mesh(geometry2, material2);
+	mesh2.rotation.x = -90*(Math.PI/180);
+	mesh2.position.y = -170;
+	
+	/*var material1 = new THREE.MeshLambertMaterial({color: 0x9a1a00});
+    var mesh1 = new THREE.Mesh(geometry1, material1);
+	mesh1.position.set(0, -100, -1000);*/
+	
+	/*var text = THREE.Mesh(textGeometry, material);
+	
+	var loader = new THREE.FontLoader();
+	
+	loader.load('three.js-master\three.js-master\examples\fonts\optimer_regular.typeface.JSON, function(font)' {
+		
+	});*/
+	
+	var size = 1300;
+	var step = 150;
+
+	var gridHelper = new THREE.GridHelper( size, step );
+	scene.add( gridHelper );
+	gridHelper.position.y = - 169;
+	
+	scene.add(mesh);
+	scene.add(mesh0);
+	scene.add(mesh2);
+	//scene.add(mesh1);
+	//scene.add(text);
+	scene.add( new THREE.BoxHelper( mesh ) );
+    scene.add( new THREE.BoxHelper( mesh0 ) );
+	scene.add( new THREE.BoxHelper( mesh2 ) );
+	
+	var light1 = new THREE.DirectionalLight(0xffffff, 2.0, 1000);
+	light.position.y = 100;
+	light.position.z = 150
+	light.target = mesh0;
+	
+	light.castShadow = true;
+	light.shadow = new THREE.LightShadow(new THREE.PerspectiveCamera(100, 1, 500, 1000));
+	light.shadow.mapSize.width = 2048*2;
+	light.shadow.mapSize.height = 2048*2;
+	scene.add(light1);
+	
+	mesh.castShadow = true;
+	mesh0.castShadow = true;
+	mesh2.receiveShadow = true;
+	
+	//render.shadowMap.enabled = true;
+	//render.shadowMap.type = THREE.PCFShadowMap;
+	
+	 var renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), antialias: true});
+    renderer.setClearColor(0x000000);
+	renderer.setPixelRatio(window.devicePixelRatio);
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	
+	requestAnimationFrame(render);
+	//};
+	
+	function render() {
+			
+		mesh.rotation.x += 0.1;
+		mesh.rotation.y -= 0.01;
+		mesh.rotation.z += 3;
+		
+		//mesh0.rotation.x += 0.01;
+		mesh0.rotation.y -= 0.01; //-=0.025
+		mesh0.rotation.z += 0.01;
+		
+		/*mesh1.rotation.x += 0.01;
+		mesh1.rotation.y -= 0.01;
+		mesh1.rotation.z += 0.001;*/
+		
+		//text.rotation.x += 0.01;
+		//text.rotation.y += 0.01;
+		//text.rotation.z += 0.01;
+		
+		//controls.update();
+		
+		renderer.render(scene, camera);
+		requestAnimationFrame(render);
+		
+	
+	}
+  </script>
+</body>
+</html>
